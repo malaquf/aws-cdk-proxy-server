@@ -1,0 +1,606 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`vpc stack - snapshot test stack is still valid 1`] = `
+{
+  "Parameters": {
+    "BootstrapVersion": {
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+      "Type": "AWS::SSM::Parameter::Value<String>",
+    },
+  },
+  "Resources": {
+    "Vpc8378EB38": {
+      "Properties": {
+        "CidrBlock": "10.0.0.0/16",
+        "EnableDnsHostnames": true,
+        "EnableDnsSupport": true,
+        "InstanceTenancy": "default",
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "MyTestStack/Vpc",
+          },
+        ],
+      },
+      "Type": "AWS::EC2::VPC",
+    },
+    "VpcEC2MessagesInterfaceVpcEndpointC9727455": {
+      "Properties": {
+        "PrivateDnsEnabled": true,
+        "SecurityGroupIds": [
+          {
+            "Fn::GetAtt": [
+              "VpcEC2MessagesInterfaceVpcEndpointSecurityGroup32EC6140",
+              "GroupId",
+            ],
+          },
+        ],
+        "ServiceName": {
+          "Fn::Join": [
+            "",
+            [
+              "com.amazonaws.",
+              {
+                "Ref": "AWS::Region",
+              },
+              ".ec2messages",
+            ],
+          ],
+        },
+        "SubnetIds": [
+          {
+            "Ref": "VpcpublicSubnet1Subnet2BB74ED7",
+          },
+        ],
+        "VpcEndpointType": "Interface",
+        "VpcId": {
+          "Ref": "Vpc8378EB38",
+        },
+      },
+      "Type": "AWS::EC2::VPCEndpoint",
+    },
+    "VpcEC2MessagesInterfaceVpcEndpointSecurityGroup32EC6140": {
+      "Properties": {
+        "GroupDescription": "MyTestStack/Vpc/EC2MessagesInterfaceVpcEndpoint/SecurityGroup",
+        "SecurityGroupEgress": [
+          {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1",
+          },
+        ],
+        "SecurityGroupIngress": [
+          {
+            "CidrIp": {
+              "Fn::GetAtt": [
+                "Vpc8378EB38",
+                "CidrBlock",
+              ],
+            },
+            "Description": {
+              "Fn::Join": [
+                "",
+                [
+                  "from ",
+                  {
+                    "Fn::GetAtt": [
+                      "Vpc8378EB38",
+                      "CidrBlock",
+                    ],
+                  },
+                  ":443",
+                ],
+              ],
+            },
+            "FromPort": 443,
+            "IpProtocol": "tcp",
+            "ToPort": 443,
+          },
+        ],
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "MyTestStack/Vpc",
+          },
+        ],
+        "VpcId": {
+          "Ref": "Vpc8378EB38",
+        },
+      },
+      "Type": "AWS::EC2::SecurityGroup",
+    },
+    "VpcEc2InterfaceVpcEndpoint1F8C0BDB": {
+      "Properties": {
+        "PrivateDnsEnabled": true,
+        "SecurityGroupIds": [
+          {
+            "Fn::GetAtt": [
+              "VpcEc2InterfaceVpcEndpointSecurityGroup2A01BA68",
+              "GroupId",
+            ],
+          },
+        ],
+        "ServiceName": {
+          "Fn::Join": [
+            "",
+            [
+              "com.amazonaws.",
+              {
+                "Ref": "AWS::Region",
+              },
+              ".ec2",
+            ],
+          ],
+        },
+        "SubnetIds": [
+          {
+            "Ref": "VpcpublicSubnet1Subnet2BB74ED7",
+          },
+        ],
+        "VpcEndpointType": "Interface",
+        "VpcId": {
+          "Ref": "Vpc8378EB38",
+        },
+      },
+      "Type": "AWS::EC2::VPCEndpoint",
+    },
+    "VpcEc2InterfaceVpcEndpointSecurityGroup2A01BA68": {
+      "Properties": {
+        "GroupDescription": "MyTestStack/Vpc/Ec2InterfaceVpcEndpoint/SecurityGroup",
+        "SecurityGroupEgress": [
+          {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1",
+          },
+        ],
+        "SecurityGroupIngress": [
+          {
+            "CidrIp": {
+              "Fn::GetAtt": [
+                "Vpc8378EB38",
+                "CidrBlock",
+              ],
+            },
+            "Description": {
+              "Fn::Join": [
+                "",
+                [
+                  "from ",
+                  {
+                    "Fn::GetAtt": [
+                      "Vpc8378EB38",
+                      "CidrBlock",
+                    ],
+                  },
+                  ":443",
+                ],
+              ],
+            },
+            "FromPort": 443,
+            "IpProtocol": "tcp",
+            "ToPort": 443,
+          },
+        ],
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "MyTestStack/Vpc",
+          },
+        ],
+        "VpcId": {
+          "Ref": "Vpc8378EB38",
+        },
+      },
+      "Type": "AWS::EC2::SecurityGroup",
+    },
+    "VpcIGWD7BA715C": {
+      "Properties": {
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "MyTestStack/Vpc",
+          },
+        ],
+      },
+      "Type": "AWS::EC2::InternetGateway",
+    },
+    "VpcId84E18EF0": {
+      "Properties": {
+        "Name": "/VpcId",
+        "Type": "String",
+        "Value": {
+          "Ref": "Vpc8378EB38",
+        },
+      },
+      "Type": "AWS::SSM::Parameter",
+    },
+    "VpcSSMInterfaceVpcEndpoint4879EC87": {
+      "Properties": {
+        "PrivateDnsEnabled": true,
+        "SecurityGroupIds": [
+          {
+            "Fn::GetAtt": [
+              "VpcSSMInterfaceVpcEndpointSecurityGroupEA29E658",
+              "GroupId",
+            ],
+          },
+        ],
+        "ServiceName": {
+          "Fn::Join": [
+            "",
+            [
+              "com.amazonaws.",
+              {
+                "Ref": "AWS::Region",
+              },
+              ".ssm",
+            ],
+          ],
+        },
+        "SubnetIds": [
+          {
+            "Ref": "VpcpublicSubnet1Subnet2BB74ED7",
+          },
+        ],
+        "VpcEndpointType": "Interface",
+        "VpcId": {
+          "Ref": "Vpc8378EB38",
+        },
+      },
+      "Type": "AWS::EC2::VPCEndpoint",
+    },
+    "VpcSSMInterfaceVpcEndpointSecurityGroupEA29E658": {
+      "Properties": {
+        "GroupDescription": "MyTestStack/Vpc/SSMInterfaceVpcEndpoint/SecurityGroup",
+        "SecurityGroupEgress": [
+          {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1",
+          },
+        ],
+        "SecurityGroupIngress": [
+          {
+            "CidrIp": {
+              "Fn::GetAtt": [
+                "Vpc8378EB38",
+                "CidrBlock",
+              ],
+            },
+            "Description": {
+              "Fn::Join": [
+                "",
+                [
+                  "from ",
+                  {
+                    "Fn::GetAtt": [
+                      "Vpc8378EB38",
+                      "CidrBlock",
+                    ],
+                  },
+                  ":443",
+                ],
+              ],
+            },
+            "FromPort": 443,
+            "IpProtocol": "tcp",
+            "ToPort": 443,
+          },
+        ],
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "MyTestStack/Vpc",
+          },
+        ],
+        "VpcId": {
+          "Ref": "Vpc8378EB38",
+        },
+      },
+      "Type": "AWS::EC2::SecurityGroup",
+    },
+    "VpcSSMMessagesInterfaceVpcEndpointB81AE340": {
+      "Properties": {
+        "PrivateDnsEnabled": true,
+        "SecurityGroupIds": [
+          {
+            "Fn::GetAtt": [
+              "VpcSSMMessagesInterfaceVpcEndpointSecurityGroupE0AAAFE7",
+              "GroupId",
+            ],
+          },
+        ],
+        "ServiceName": {
+          "Fn::Join": [
+            "",
+            [
+              "com.amazonaws.",
+              {
+                "Ref": "AWS::Region",
+              },
+              ".ssmmessages",
+            ],
+          ],
+        },
+        "SubnetIds": [
+          {
+            "Ref": "VpcpublicSubnet1Subnet2BB74ED7",
+          },
+        ],
+        "VpcEndpointType": "Interface",
+        "VpcId": {
+          "Ref": "Vpc8378EB38",
+        },
+      },
+      "Type": "AWS::EC2::VPCEndpoint",
+    },
+    "VpcSSMMessagesInterfaceVpcEndpointSecurityGroupE0AAAFE7": {
+      "Properties": {
+        "GroupDescription": "MyTestStack/Vpc/SSMMessagesInterfaceVpcEndpoint/SecurityGroup",
+        "SecurityGroupEgress": [
+          {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1",
+          },
+        ],
+        "SecurityGroupIngress": [
+          {
+            "CidrIp": {
+              "Fn::GetAtt": [
+                "Vpc8378EB38",
+                "CidrBlock",
+              ],
+            },
+            "Description": {
+              "Fn::Join": [
+                "",
+                [
+                  "from ",
+                  {
+                    "Fn::GetAtt": [
+                      "Vpc8378EB38",
+                      "CidrBlock",
+                    ],
+                  },
+                  ":443",
+                ],
+              ],
+            },
+            "FromPort": 443,
+            "IpProtocol": "tcp",
+            "ToPort": 443,
+          },
+        ],
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "MyTestStack/Vpc",
+          },
+        ],
+        "VpcId": {
+          "Ref": "Vpc8378EB38",
+        },
+      },
+      "Type": "AWS::EC2::SecurityGroup",
+    },
+    "VpcVPCGWBF912B6E": {
+      "Properties": {
+        "InternetGatewayId": {
+          "Ref": "VpcIGWD7BA715C",
+        },
+        "VpcId": {
+          "Ref": "Vpc8378EB38",
+        },
+      },
+      "Type": "AWS::EC2::VPCGatewayAttachment",
+    },
+    "VpcprivateSubnet1DefaultRouteB506891A": {
+      "Properties": {
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "NatGatewayId": {
+          "Ref": "VpcpublicSubnet1NATGatewayA036E8A6",
+        },
+        "RouteTableId": {
+          "Ref": "VpcprivateSubnet1RouteTable1979EACB",
+        },
+      },
+      "Type": "AWS::EC2::Route",
+    },
+    "VpcprivateSubnet1RouteTable1979EACB": {
+      "Properties": {
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "MyTestStack/Vpc/privateSubnet1",
+          },
+        ],
+        "VpcId": {
+          "Ref": "Vpc8378EB38",
+        },
+      },
+      "Type": "AWS::EC2::RouteTable",
+    },
+    "VpcprivateSubnet1RouteTableAssociationEEBD93CE": {
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "VpcprivateSubnet1RouteTable1979EACB",
+        },
+        "SubnetId": {
+          "Ref": "VpcprivateSubnet1SubnetCEAD3716",
+        },
+      },
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+    },
+    "VpcprivateSubnet1SubnetCEAD3716": {
+      "Properties": {
+        "AvailabilityZone": {
+          "Fn::Select": [
+            0,
+            {
+              "Fn::GetAZs": "",
+            },
+          ],
+        },
+        "CidrBlock": "10.0.1.0/24",
+        "MapPublicIpOnLaunch": false,
+        "Tags": [
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "private",
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Private",
+          },
+          {
+            "Key": "Name",
+            "Value": "MyTestStack/Vpc/privateSubnet1",
+          },
+        ],
+        "VpcId": {
+          "Ref": "Vpc8378EB38",
+        },
+      },
+      "Type": "AWS::EC2::Subnet",
+    },
+    "VpcpublicSubnet1DefaultRouteB88F9E93": {
+      "DependsOn": [
+        "VpcVPCGWBF912B6E",
+      ],
+      "Properties": {
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": {
+          "Ref": "VpcIGWD7BA715C",
+        },
+        "RouteTableId": {
+          "Ref": "VpcpublicSubnet1RouteTable15C15F8E",
+        },
+      },
+      "Type": "AWS::EC2::Route",
+    },
+    "VpcpublicSubnet1EIP411541E6": {
+      "Properties": {
+        "Domain": "vpc",
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "MyTestStack/Vpc/publicSubnet1",
+          },
+        ],
+      },
+      "Type": "AWS::EC2::EIP",
+    },
+    "VpcpublicSubnet1NATGatewayA036E8A6": {
+      "DependsOn": [
+        "VpcpublicSubnet1DefaultRouteB88F9E93",
+        "VpcpublicSubnet1RouteTableAssociation4E83B6E4",
+      ],
+      "Properties": {
+        "AllocationId": {
+          "Fn::GetAtt": [
+            "VpcpublicSubnet1EIP411541E6",
+            "AllocationId",
+          ],
+        },
+        "SubnetId": {
+          "Ref": "VpcpublicSubnet1Subnet2BB74ED7",
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "MyTestStack/Vpc/publicSubnet1",
+          },
+        ],
+      },
+      "Type": "AWS::EC2::NatGateway",
+    },
+    "VpcpublicSubnet1RouteTable15C15F8E": {
+      "Properties": {
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "MyTestStack/Vpc/publicSubnet1",
+          },
+        ],
+        "VpcId": {
+          "Ref": "Vpc8378EB38",
+        },
+      },
+      "Type": "AWS::EC2::RouteTable",
+    },
+    "VpcpublicSubnet1RouteTableAssociation4E83B6E4": {
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "VpcpublicSubnet1RouteTable15C15F8E",
+        },
+        "SubnetId": {
+          "Ref": "VpcpublicSubnet1Subnet2BB74ED7",
+        },
+      },
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+    },
+    "VpcpublicSubnet1Subnet2BB74ED7": {
+      "Properties": {
+        "AvailabilityZone": {
+          "Fn::Select": [
+            0,
+            {
+              "Fn::GetAZs": "",
+            },
+          ],
+        },
+        "CidrBlock": "10.0.0.0/24",
+        "MapPublicIpOnLaunch": true,
+        "Tags": [
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "public",
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Public",
+          },
+          {
+            "Key": "Name",
+            "Value": "MyTestStack/Vpc/publicSubnet1",
+          },
+        ],
+        "VpcId": {
+          "Ref": "Vpc8378EB38",
+        },
+      },
+      "Type": "AWS::EC2::Subnet",
+    },
+  },
+  "Rules": {
+    "CheckBootstrapVersion": {
+      "Assertions": [
+        {
+          "Assert": {
+            "Fn::Not": [
+              {
+                "Fn::Contains": [
+                  [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                  ],
+                  {
+                    "Ref": "BootstrapVersion",
+                  },
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+        },
+      ],
+    },
+  },
+}
+`;
