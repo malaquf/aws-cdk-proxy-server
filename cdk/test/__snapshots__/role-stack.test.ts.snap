@@ -1,0 +1,125 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`role stack - snapshot test stack is still valid 1`] = `
+{
+  "Parameters": {
+    "BootstrapVersion": {
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+      "Type": "AWS::SSM::Parameter::Value<String>",
+    },
+  },
+  "Resources": {
+    "ProxyUserRole8BFC6591": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "AWS": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::",
+                      {
+                        "Ref": "AWS::AccountId",
+                      },
+                      ":root",
+                    ],
+                  ],
+                },
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Description": "Role for accessing proxy server",
+        "RoleName": "proxy-user-role",
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "ProxyUserRoleDefaultPolicy8C9A7745": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": "ec2:DescribeInstances",
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            {
+              "Action": [
+                "ssm:StartSession",
+                "ec2-instance-connect:SendSSHPublicKey",
+              ],
+              "Condition": {
+                "0": {
+                  "StringEquals": {
+                    "aws:ResourceTag/Name": "proxy-server",
+                  },
+                },
+              },
+              "Effect": "Allow",
+              "Resource": "arn:aws:ec2:*:*:instance/*",
+            },
+            {
+              "Action": "ssm:StartSession",
+              "Effect": "Allow",
+              "Resource": "arn:aws:ssm:*:*:document/AWS-StartSSHSession",
+            },
+            {
+              "Action": [
+                "ssm:TerminateSession",
+                "ssm:ResumeSession",
+              ],
+              "Effect": "Allow",
+              "Resource": "arn:aws:ssm:*:*:session/$\${aws:username}-*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "ProxyUserRoleDefaultPolicy8C9A7745",
+        "Roles": [
+          {
+            "Ref": "ProxyUserRole8BFC6591",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+  },
+  "Rules": {
+    "CheckBootstrapVersion": {
+      "Assertions": [
+        {
+          "Assert": {
+            "Fn::Not": [
+              {
+                "Fn::Contains": [
+                  [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                  ],
+                  {
+                    "Ref": "BootstrapVersion",
+                  },
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+        },
+      ],
+    },
+  },
+}
+`;
