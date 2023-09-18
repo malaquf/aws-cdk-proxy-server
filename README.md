@@ -1,6 +1,6 @@
 # CDK for Proxy Server in AWS
 
-A demo for setting up a proxy server in AWS.
+A demo for setting up a proxy server in AWS created for this [this article](https://medium.com/p/4e97d1508be6/).
 
 The stacks can be found in cdk/bin/cdk.ts
 
