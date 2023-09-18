@@ -18,11 +18,11 @@ This architecture was built based on [this article](https://aws.amazon.com/blogs
 
 ## Connecting/Disconnecting
 ### MacOS/Linux
-* Make sure non expired temporary credentials for your account are present in the terminal session.
+* Assume the deployed 'proxy-user-role' role in your terminal session.
 * Connect to proxy: `./scripts/unix/connect.sh`
 * Disconnect from proxy: `./scripts/unix/disconnect.sh`
 
 ### Windows
-* Make sure non expired temporary credentials for your account are present in the prompt session.
+* Assume the deployed 'proxy-user-role' role in your terminal session.
 * Connect to proxy: `./scripts/cmd/connect.cmd`
 * Disconnect from proxy: `./scripts/cmd/disconnect.cmd`
