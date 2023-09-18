@@ -1,6 +1,8 @@
 import {Fn, Stack, StackProps} from "aws-cdk-lib";
 import {Construct} from "constructs";
 import {
+    AmazonLinuxCpuType,
+    AmazonLinuxGeneration,
     AmazonLinuxImage,
     CfnInstance,
     InstanceClass,
@@ -57,7 +59,10 @@ export class Ec2Stack extends Stack {
             subnetId: vpc.privateSubnets[0].subnetId,
             securityGroupIds: [ec2SecurityGroup.securityGroupId],
             iamInstanceProfile: profile.instanceProfileName,
-            imageId: new AmazonLinuxImage().getImage(this).imageId,
+            imageId: new AmazonLinuxImage({
+                cpuType: AmazonLinuxCpuType.X86_64,
+                generation: AmazonLinuxGeneration.AMAZON_LINUX_2
+            }).getImage(this).imageId,
             instanceType: InstanceType.of(InstanceClass.T2, InstanceSize.MICRO).toString(),
             userData: Fn.base64(ssmaUserData.render()),
             tags: [{key: 'Name', value: 'proxy-server'}],
