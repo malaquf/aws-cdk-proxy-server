@@ -6,8 +6,6 @@ import {
     InstanceClass,
     InstanceSize,
     InstanceType,
-    Peer,
-    Port,
     SecurityGroup,
     UserData,
     Vpc
@@ -20,12 +18,6 @@ export class Ec2Stack extends Stack {
     constructor(scope: Construct, id: string, props?: StackProps) {
         super(scope, id, props);
 
-        /**
-         * THIS STACK CURRENTLY CAN'T BE USED AT THE MOMENT
-         * BECAUSE CDK IS NOT ATTACHING THE
-         * INSTANCE PROFILE TO THE INSTANCE
-         */
-
         const vpc = Vpc.fromLookup(this, 'ImportedVpc', {
             vpcId: StringParameter.valueFromLookup(this, '/VpcId'),
         });
@@ -35,10 +27,9 @@ export class Ec2Stack extends Stack {
             description: "Security Group for Ec2 Proxy instance",
             disableInlineRules: true,
             securityGroupName: "Ec2ProxySecurityGroup",
-            allowAllOutbound: false,
-            allowAllIpv6Outbound: false,
+            allowAllOutbound: true,
+            allowAllIpv6Outbound: true,
         });
-        ec2SecurityGroup.addEgressRule(Peer.anyIpv4(), Port.tcp(3128), 'squid proxy');
 
         const instanceRole = new Role(this, 'EC2ProxyRole', {
             roleName: 'EC2ProxyRole',
@@ -48,13 +39,14 @@ export class Ec2Stack extends Stack {
         });
 
         const profile = new CfnInstanceProfile(this, `InstanceProfile`, {
-            roles: [ instanceRole.roleName ]
+            roles: [ instanceRole.roleName ],
+            instanceProfileName: 'ProxyInstanceProfile'
         });
 
         const ssmaUserData = UserData.forLinux();
         ssmaUserData.addCommands(
             'yum update -y -q',
-            'yum install ec2-instance-connect',
+            'sudo yum install ec2-instance-connect',
             'sudo systemctl enable amazon-ssm-agent',
             'sudo systemctl start amazon-ssm-agent',
             'sudo yum install squid',
@@ -62,15 +54,11 @@ export class Ec2Stack extends Stack {
         );
 
         new CfnInstance(this, 'ProxyServerInstance', {
-            networkInterfaces: [
-                {
-                    deviceIndex: "0",
-                    subnetId: vpc.privateSubnets[0].subnetId
-                }
-            ],
-            iamInstanceProfile: profile.ref,
+            subnetId: vpc.privateSubnets[0].subnetId,
+            securityGroupIds: [ec2SecurityGroup.securityGroupId],
+            iamInstanceProfile: profile.instanceProfileName,
             imageId: new AmazonLinuxImage().getImage(this).imageId,
-            instanceType: InstanceType.of(InstanceClass.T3, InstanceSize.SMALL).toString(),
+            instanceType: InstanceType.of(InstanceClass.T2, InstanceSize.MICRO).toString(),
             userData: Fn.base64(ssmaUserData.render()),
             tags: [{key: 'Name', value: 'proxy-server'}],
             });

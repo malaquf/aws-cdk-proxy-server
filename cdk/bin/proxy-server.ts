@@ -13,8 +13,8 @@ const PROPS_WITH_ENV = {
     }
 };
 
-const vpcStack = new VpcStack(app, 'VpcStack', PROPS_WITH_ENV);
-const ec2Stack = new Ec2Stack(app, 'Ec2Stack', PROPS_WITH_ENV);
-new RoleStack(app, 'RoleStack', PROPS_WITH_ENV);
+const vpcStack = new VpcStack(app, 'ProxyVpcStack', PROPS_WITH_ENV);
+const ec2Stack = new Ec2Stack(app, 'ProxyEc2Stack', PROPS_WITH_ENV);
+new RoleStack(app, 'ProxyRoleStack', PROPS_WITH_ENV);
 
 ec2Stack.addDependency(vpcStack);

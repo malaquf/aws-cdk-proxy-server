@@ -8,7 +8,7 @@ export class VpcStack extends Stack {
         super(scope, id, props);
         
         const vpc = new Vpc(this, 'Vpc', {
-            maxAzs: 1, // increase it for resilience
+            maxAzs: 1,
             subnetConfiguration: [
                 {
                     cidrMask: 24,
@@ -26,25 +26,25 @@ export class VpcStack extends Stack {
         // allows access to EC2 in private subnet through SSM
         vpc.addInterfaceEndpoint('SSMInterfaceVpcEndpoint', {
             service: new InterfaceVpcEndpointAwsService('ssm'),
-            subnets: { subnetType: SubnetType.PUBLIC},
+            subnets: { subnetType: SubnetType.PUBLIC },
             privateDnsEnabled: true,
             open: true
         });
         vpc.addInterfaceEndpoint('Ec2InterfaceVpcEndpoint', {
             service: new InterfaceVpcEndpointAwsService('ec2'),
-            subnets: { subnetType: SubnetType.PUBLIC},
+            subnets: { subnetType: SubnetType.PUBLIC },
             privateDnsEnabled: true,
             open: true
         });
         vpc.addInterfaceEndpoint('SSMMessagesInterfaceVpcEndpoint', {
             service: new InterfaceVpcEndpointAwsService('ssmmessages'),
-            subnets: { subnetType: SubnetType.PUBLIC},
+            subnets: { subnetType: SubnetType.PUBLIC },
             privateDnsEnabled: true,
             open: true
         });
         vpc.addInterfaceEndpoint('EC2MessagesInterfaceVpcEndpoint', {
             service: new InterfaceVpcEndpointAwsService('ec2messages'),
-            subnets: { subnetType: SubnetType.PUBLIC},
+            subnets: { subnetType: SubnetType.PUBLIC },
             privateDnsEnabled: true,
             open: true
         });
